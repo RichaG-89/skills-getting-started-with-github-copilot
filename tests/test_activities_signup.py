@@ -23,22 +23,24 @@ class TestActivitySignup:
         )
         assert response.headers["content-type"] == "application/json"
 
-    def test_signup_response_contains_message(self, client, sample_activity_name, sample_email):
+    def test_signup_response_contains_message(self, client, sample_activity_name):
         """Test that signup response contains a message field."""
+        email = "test_message_response@test.edu"
         response = client.post(
-            f"/activities/{sample_activity_name}/signup?email={sample_email}"
+            f"/activities/{sample_activity_name}/signup?email={email}"
         )
         data = response.json()
         assert "message" in data
         assert isinstance(data["message"], str)
 
-    def test_signup_response_message_contains_email(self, client, sample_activity_name, sample_email):
+    def test_signup_response_message_contains_email(self, client, sample_activity_name):
         """Test that response message contains the student's email."""
+        email = "test_message_email@test.edu"
         response = client.post(
-            f"/activities/{sample_activity_name}/signup?email={sample_email}"
+            f"/activities/{sample_activity_name}/signup?email={email}"
         )
         data = response.json()
-        assert sample_email in data["message"]
+        assert email in data["message"]
 
     def test_signup_nonexistent_activity_returns_404(self, client, sample_email):
         """Test that signup for non-existent activity returns 404."""

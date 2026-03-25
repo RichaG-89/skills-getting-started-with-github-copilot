@@ -33,7 +33,8 @@ class TestIntegration:
 
     def test_multiple_activities_signup_workflow(self, client):
         """Test user signing up for multiple activities."""
-        email = "multiactivity@test.edu"
+        import uuid
+        email = f"multiactivity_{uuid.uuid4().hex[:8]}@test.edu"
         activities = client.get("/activities").json()
         activity_list = list(activities.keys())[:2]  # Get first 2 activities
         
